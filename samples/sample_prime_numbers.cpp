@@ -35,6 +35,7 @@ int main()
         if (s.GetBit(k))
           s.ClrBit(k);
   // оставшиеся в s элементы - простые числа
+  std::cin >> s;
   cout << endl << "Печать множества некратных чисел" << endl << s << endl;
   cout << endl << "Печать простых чисел" << endl;
   count = 0;
@@ -46,7 +47,7 @@ int main()
       cout << setw(3) << m << " ";
       if (k++ % 10 == 0)
         cout << endl;
-    }
+    } 
   cout << endl;
   cout << "В первых " << n << " числах " << count << " простых" << endl;
 }
