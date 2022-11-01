@@ -12,7 +12,7 @@
 
 #ifndef USE_SET // Использовать класс TBitField
 
-#include "../include/tset.h"
+#include "tbitfield.h"
 
 int main()
 {
@@ -35,7 +35,6 @@ int main()
         if (s.GetBit(k))
           s.ClrBit(k);
   // оставшиеся в s элементы - простые числа
-  std::cin >> s;
   cout << endl << "Печать множества некратных чисел" << endl << s << endl;
   cout << endl << "Печать простых чисел" << endl;
   count = 0;

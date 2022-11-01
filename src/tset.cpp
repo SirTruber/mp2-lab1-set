@@ -5,7 +5,7 @@
 //
 // Множество - реализация через битовые поля
 
-#include "../include/tset.h"
+#include "tset.h"
 
 TSet::TSet(int mp) : BitField(mp)
 {
@@ -13,16 +13,15 @@ TSet::TSet(int mp) : BitField(mp)
 }
 
 // конструктор копирования
-TSet::TSet(const TSet &s) : BitField(s.MaxPower)
+TSet::TSet(const TSet &s) : BitField(s.BitField), MaxPower (s.MaxPower)
 {
-    this->operator=(s);
+
 }
 
 // конструктор преобразования типа
-TSet::TSet(const TBitField &bf) : BitField(bf.GetLength())
+TSet::TSet(const TBitField &bf) : BitField(bf), MaxPower (bf.GetLength())
 {
-    MaxPower = bf.GetLength();
-    BitField = bf;
+
 }
 
 TSet::operator TBitField()
@@ -37,10 +36,7 @@ int TSet::GetMaxPower(void) const // получить макс. к-во эл-т�
 
 int TSet::IsMember(const int Elem) const // элемент множества?
 {
-    if (BitField.GetBit(Elem))
-        return 1;
-    else
-        return 0;
+    return BitField.GetBit(Elem);
 }
 
 void TSet::InsElem(const int Elem) // включение элемента множества
@@ -57,7 +53,7 @@ void TSet::DelElem(const int Elem) // исключение элемента мн
 
 TSet& TSet::operator=(const TSet &s) // присваивание
 {
-    if(*this!=s){
+    if(this != &s){
         MaxPower = s.MaxPower;
         BitField = s.BitField;
     }
@@ -74,8 +70,12 @@ int TSet::operator==(const TSet &s) const // сравнение
 
 int TSet::operator!=(const TSet &s) const // сравнение
 {
-    if (*this == s) return 0;
-    else return 1;
+  if (*this == s){
+    return 0;
+  }
+  else {
+    return 1;
+  }
 }
 
 TSet TSet::operator+(const TSet &s) // объединение
