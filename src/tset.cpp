@@ -90,14 +90,16 @@ TSet TSet::operator+(const TSet &s) // объединение
 
 TSet TSet::operator+(const int Elem) // объединение с элементом
 {
-    InsElem(Elem);
-    return *this;
+    TSet tmp(*this);
+    tmp.InsElem(Elem);
+    return tmp;
 }
 
 TSet TSet::operator-(const int Elem) // разность с элементом
 {
-    DelElem(Elem);
-    return *this;
+    TSet tmp(*this);
+    tmp.DelElem(Elem);
+    return tmp;
 }
 
 TSet TSet::operator*(const TSet &s) // пересечение
@@ -112,8 +114,9 @@ TSet TSet::operator*(const TSet &s) // пересечение
 
 TSet TSet::operator~(void) // дополнение
 {
-    ~BitField;
-    return *this;
+    TSet tmp(*this);
+    tmp.BitField =~BitField;
+    return tmp;
 }
 
 // перегрузка ввода/вывода

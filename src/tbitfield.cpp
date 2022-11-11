@@ -12,9 +12,9 @@ TBitField::TBitField(int len) : BitLen(len), MemLen(1 + len / (sizeof(TELEM) * 8
   pMem = new TELEM[MemLen]();
   }
 
-TBitField::TBitField(const TBitField &bf) // конструктор копирования
+TBitField::TBitField(const TBitField &bf) :BitLen(bf.BitLen), MemLen(bf.MemLen), pMem(new TELEM[bf.BitLen]) // конструктор копирования
 {
-  this->operator=(bf);
+    std::copy(bf.pMem, bf.pMem + bf.MemLen, pMem);
 }
 
 TBitField::~TBitField()
@@ -70,6 +70,7 @@ TBitField& TBitField::operator=(const TBitField &bf) // присваивание
   if (this != &bf){
     BitLen = bf.BitLen;
     MemLen = bf.MemLen;
+    delete[] pMem;
     pMem = new TELEM[bf.MemLen];
     std::copy(bf.pMem,bf.pMem + bf.MemLen,pMem);
   }
@@ -131,13 +132,12 @@ return (tmp);
 
 TBitField TBitField::operator~(void) // отрицание
 {
-  for(size_t i = 0; i<BitLen;i++){
-    if(GetBit(i))
-      ClrBit(i);
-    else
-      SetBit(i);
+  TBitField tmp(BitLen);
+  for (size_t i = 0; i < BitLen; i++) {
+      if (GetBit(i) == false)
+          tmp.SetBit(i);
   }
-  return(*this);
+  return(tmp);
 }
 
 // ввод/вывод
