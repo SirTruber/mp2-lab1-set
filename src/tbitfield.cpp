@@ -6,9 +6,10 @@
 // Битовое поле
 #include "tbitfield.h"
 
-TBitField::TBitField(int len) : BitLen(len), MemLen(1 + len / (sizeof(TELEM) * 8))
+TBitField::TBitField(int len) : BitLen(len), MemLen(len / (sizeof(TELEM) * 8))
 {
   if (len <= 0)throw std::invalid_argument{ "TBitField(int len)" };
+  if (MemLen * sizeof(TELEM) * 8 < len) MemLen++;
   pMem = new TELEM[MemLen]();
   }
 
@@ -134,7 +135,7 @@ TBitField TBitField::operator~(void) // отрицание
 {
   TBitField tmp(BitLen);
   for (size_t i = 0; i < BitLen; i++) {
-      if (GetBit(i) == false)
+      if (GetBit(i) == 0)
           tmp.SetBit(i);
   }
   return(tmp);
@@ -152,7 +153,7 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
      else if (ch[i] == '1')
        bf.SetBit(i);
      else{
-       throw std::length_error("istream & operator>>(istream & istr, TBitField & bf)");
+       throw std::invalid_argument("istream & operator>>(istream & istr, TBitField & bf)");
      }
    }
   return istr;
